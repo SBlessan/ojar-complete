@@ -1,0 +1,19 @@
+<h1>Inside the tryCart page</h1>
+<button id="button" data-cart-add="45984217465153">Add an Item</button>
+<button id="button-empty">Empty Cart</button>
+
+
+<script type="text/javascript">
+    jQuery(function() {
+        CartJS.init({{ cart | json }});
+    });
+
+   $('#button').click(function() {
+        CartJS.addItem(45984217465153);
+    });
+
+   $('#button-empty').click(function() {
+        CartJS.clear();
+    });
+  
+</script>

@@ -1,0 +1,147 @@
+<div class = "outer-container">
+
+  <div class = "image-container left">
+    <a href="{{section.settings.link1}}">
+    <img src="{{ section.settings.image-left | img_url: 'master' }}"   style = "width:945px;height:1369px" >
+   
+    <div  class="hover-box-left">
+      <p class="hover1">{{ section.settings.hover-text-1 }}</p>
+      <p class="hover2">{{ section.settings.hover-text-2 }}</p>
+    </div>
+    </a>
+    
+  </div>
+
+  <div class = "image-container right">
+
+    
+    <a href="{{section.settings.link2}}">
+    <img src="{{ section.settings.image-right | img_url: 'master' }}"  style = "width:945px;height:1369px" >
+    <div  class="hover-box-right">
+      <p class="hover1">{{ section.settings.hover-text-1 }}</p>
+      <p class="hover2">{{ section.settings.hover-text-img2 }}</p>
+    </div>
+
+    </a>
+    
+  </div>
+  
+</div>
+
+{% schema %}
+  {
+    "name": "Custom Image",
+    "settings": [
+    
+    {
+      "type":"image_picker",
+      "id":"image-left",
+      "label":"Image picker"
+      
+    },
+    {
+      "type":"image_picker",
+      "id":"image-right",
+      "label":"Image picker"
+    },
+    {
+      "type":"text",
+      "id":"hover-text-1",
+      "label":"Enter Image Hover Text",
+      "default":"Discover"
+    },
+    {
+      "type":"text",
+      "id":"hover-text-2",
+      "label":"Enter Image Hover Text for Image 1"
+    },
+    {
+      "type":"text",
+      "id":"hover-text-img2",
+      "label":"Enter Image Hover Text for Image 2"
+    },
+    {
+      "type":"url",
+      "id":"link1",
+      "label":"Link URL 1"
+    },
+    {
+      "type":"url",
+      "id":"link2",
+      "label":"Link URL 2"
+    }],
+    
+    
+    "presets": [
+      {
+        "name":"Image Custom"
+      }
+    ]
+  }
+{% endschema %}
+
+{% style %}
+
+  *{
+    box-sizing:border-box;
+  }
+
+  .outer-container{
+    display:flex;
+    margin-bottom:20px;
+    justify-content:space-between;
+  }
+
+  .image-container{
+    width:945px;
+    height:1369px;
+    position:relative;
+  }
+/* 
+  .image-container img {
+    object-fit: co;
+  } */
+
+  .left {
+    margin-right:10px;
+    position:relative;
+  }
+  /* .hover1{
+    position:absolute;
+    top:50%;
+    left:50%;
+  } */
+
+  .hover-box-left{
+     position:absolute;
+     top:50%;
+     left:40%;
+     color:white;
+     text-align:center;
+     opacity:0;
+  }
+
+  .left:hover .hover-box-left {
+    opacity:1;
+    transition:0.7s;
+  }
+
+   .hover-box-right{
+     position:absolute;
+     top:50%;
+     right:40%;
+     color:white;
+     text-align:center;
+     opacity:0;
+  }
+
+  .right {
+    margin-left:5px;
+  }
+
+  .right:hover .hover-box-right {
+    opacity:1;
+    transition:0.7s;
+  }
+
+{% endstyle %}

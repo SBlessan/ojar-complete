@@ -1,0 +1,109 @@
+{% if cart.items %}
+<div class="outer_container">
+  <h1>{{ section.settings.heading }}</h1>
+  
+
+  
+  <div class="block_container">
+    {% for block in section.blocks %}
+      <div class="block_content">
+         <img src="{{ block.settings.block_image | img_url:'large'}}" />
+         <h2> {{ block.settings.blocktext }}</h2>
+       
+          <button class="check_button" >Add to cart</button>
+        
+        
+      </div>
+     
+    {% endfor %}
+  </div>
+
+  
+  
+</div>
+<button  onclick="showw()">Show/Hide</button>
+
+{% endif %}
+
+<style>
+  block_content img{
+    height:80px;
+    width:80px;
+  }
+</style>
+
+
+{% schema %}
+  {
+    "name": "Try",
+    "settings": [
+      {
+        "type":"text",
+        "id":"heading",
+        "label":"Main Heading",
+        "default":"Try heading"
+      }
+    ],
+    "blocks":[
+      {
+        "type":"image",
+        "name":"Custom block",
+        "settings":[
+          {
+            "type":"image_picker",
+            "id":"block_image",
+            "label":"Enter item image"
+          },
+          {
+            "type":"text",
+            "id":"blocktext",
+            "label":"Item description",
+            "default":"Enter Item Description"
+          }
+        ]
+      }
+    ],
+    "presets":[{
+      "category":"Image",
+      "name":"Try section"
+    }]
+  }
+{% endschema %}
+<script>
+ 
+    jQuery(function() {
+        CartJS.init({{ cart | json }}, {
+            "dataAPI": false,
+            "requestBodyClass": "loading"
+        });
+    });
+
+  $('.check_button').click(function() {
+        CartJS.addItem();
+    });
+
+
+  
+function hi(){ console.log('Hi!')
+              let text = document.getElementById("block_container")
+              
+              
+                console.log(text)
+             }
+function showw(){
+  $(".block_container").toggle()
+  
+  
+  
+}
+ 
+</script>
+
+<style>
+  .block_container{
+    display:flex;
+  }
+  .block_content{
+    margin:15px;
+  }
+</style>

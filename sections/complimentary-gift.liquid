@@ -1,0 +1,178 @@
+<form action="{{ routes.cart_url }}" class="cart__contents critical-hidden" method="post" id="cart">
+<hr>
+<br>
+  <section class="collection-section">
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+
+
+    <div class="collection-grid">
+
+
+
+      {% for collec in collections[section.settings.collection_to_display.handle].products %}
+        <div class="collection-item">
+          <a href="{{ collec.url }}">
+
+            <img src="{{ collec.featured_image | img_url: 'small' }}" alt="{{ collec.title }}">
+            <p id = "sample_name" class="collection-detail" name="attributes[sample_name]" value="{{ cart.attributes.sample_name }}">{{ collec.title }}</p>
+            <!-- <input name="attributes[sample_name]" value="{{ cart.attributes.sample_name }}"/> -->
+            <p class="demo collection-detail" >{{ collec.type }}</p>
+            <p name="attributes[Sample product id]" value="{{ cart.attributes.sample_id }}" name="attributes[Sample Name]" value="{{ cart.attributes.sample_name }}"></p>
+          </a>
+          <button data-id={{ collec.variants[0].id }} class="add_button">Add to Cart</button>
+        </div>
+
+
+        <!-- {% for item in cart.items %}
+          <p class="try-data" data-cart="{{cart.items}}"></p>
+        {% endfor %} -->
+
+      {% endfor %}
+    </div>
+
+  </section>
+
+</form>
+
+
+
+
+
+<script>
+
+  $(document).ready(function() {
+
+    jQuery(function() {
+      CartJS.init({{ cart | json }});
+    });
+    
+      
+      sample()
+    
+      function sample(){
+        // console.log("Onload working")
+        let c = 0;
+        let p = 0;
+        let cartLength = CartJS.cart.items
+        
+        // console.log("length is : ", cartLength.length)
+        
+        for (let i = 0; i < cartLength.length; i++) {
+          if(CartJS.cart.items[i].product_type == '15ml')
+          {
+            console.log(CartJS.cart.items[i])
+            c = c + CartJS.cart.items[i].quantity
+
+          }
+          else if(CartJS.cart.items[i].product_type == '2ml')
+          {
+            p = p + CartJS.cart.items[i].quantity
+          }
+
+
+          console.log(CartJS.cart.items[i].product_id)
+          }
+      console.log("Product Count is : ", c)
+      console.log("Sample Count is : ", p)
+      if(p<c) {
+        
+        $(".collection-section").css("display","block");
+      }
+      }
+    
+
+
+    $('.add_button').click(function() {
+      
+
+      
+      const element = $(this).attr("data-id");
+      // const data = $(".try-data").attr("data-cart")
+      // const Pdata = Object.values(data);
+      console.log("Attribute is : " , element)
+      CartJS.addItem(element);
+     
+
+    });
+    $("#remove-try-button").click(function() {
+      const remove_element = $(this).attr("data-variant-id");
+      console.log("Remove button click" ,remove_element )
+    })
+
+  });
+</script>
+
+{% schema %}
+
+  {
+    "name": "Complimentary Section",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Section Title",
+        "id": "title",
+        "default": "Featured Collections"
+      }, {
+        "type": "collection",
+        "label": "Collection to Display",
+        "id": "collection_to_display"
+      }
+    ],
+    "presets": [
+      {
+        "category": "Complimentary",
+        "name": "Complimentary section"
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+
+  .section-title{
+    
+    margin-left:40%;
+  }
+  
+  .collection-grid {
+
+    display: flex;
+    margin:0 auto;
+    max-width:1290px;
+    justify-content:center;
+  }
+
+  .collection-item {
+    margin: 20px;
+    border: 1px solid black;
+    max-width: 20%;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+
+  }
+  .collection-item p {
+    text-decoration:none;
+  }
+
+  .collection-detail p{
+    text-decoration:none;
+
+    display: flex;
+    margin-left: 0 auto;
+  }
+
+  .collection-item {
+    margin: 20px;
+    border: 1px solid black;
+    width: 30%;
+    padding: 20px;
+    text-align: center;
+
+  }
+
+  .collection-section{
+    display: none;
+  }
+</style>
